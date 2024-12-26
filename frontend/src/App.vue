@@ -46,7 +46,7 @@
     <div class='right-column'>
       <div v-if='isLoading' class='spinner-container'>
         <div class='spinner'/>
-        <p class='initial-prompt'>正在生成会议纪要...</p>
+        <p>正在生成会议纪要...</p>
       </div>
       <div v-else-if='files.length > 0' v-html='renderedMarkdown' class='markdown-content'/>
       <div v-else class='initial-prompt'>
@@ -262,5 +262,41 @@ li {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.spinner-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.spinner {
+  border: 8px solid #F3F3F3;
+  border-top: 8px solid #5AA1AF;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  animation: spin 2s linear infinite;
+  margin-bottom: 20px;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #E3F1F8;
+  border-radius: 5px;
 }
 </style>
