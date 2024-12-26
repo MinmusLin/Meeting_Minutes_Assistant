@@ -1,3 +1,178 @@
 <template>
-  <h1>会议纪要助手</h1>
+  <div class='container'>
+    <div class='left-column'>
+      <div class='header'>
+        <div class='text-container'>
+          <h1>会议纪要助手</h1>
+          <p>一款 AI 驱动的工具</p>
+          <p>用于快速将会议录音转换为会议纪要</p>
+        </div>
+        <el-icon class='icon' size='50' color='#9FD6DC' style='padding-top: 20px'>
+          <DataAnalysis/>
+        </el-icon>
+      </div>
+      <ul>
+        <li v-for='(file, index) in files' :key='index'>
+          <div>
+            <div class='file-name'>{{ file.name }}</div>
+            <div class='file-date'>{{ file.date }}</div>
+          </div>
+          <el-icon size='20'>
+            <Delete class='delete-icon'/>
+          </el-icon>
+        </li>
+      </ul>
+      <div class='button-container'>
+        <label class='upload-button'>
+          <el-icon class='plus-delete-icon'>
+            <Delete/>
+          </el-icon>
+          清空全部
+        </label>
+        <input type='file' id='fileInput' style='display: none' @change='handleFileUpload'/>
+        <label for='fileInput' class='upload-button'>
+          <el-icon class='plus-delete-icon'>
+            <Plus/>
+          </el-icon>
+          上传会议录音
+        </label>
+      </div>
+    </div>
+    <div class='right-column'></div>
+  </div>
 </template>
+
+<script setup lang='ts'>
+import {ref} from 'vue'
+import {DataAnalysis, Delete, Plus} from '@element-plus/icons-vue'
+
+interface FileItem {
+  name: string
+  date: string
+}
+
+const files = ref<FileItem[]>([])
+
+function handleFileUpload(event: Event) {
+  const target = event.target as HTMLInputElement
+  const file = target.files?.[0]
+  if (file) {
+    const currentDate = new Date().toLocaleString()
+    files.value.push({name: file.name, date: currentDate})
+  }
+}
+</script>
+
+<style scoped lang='css'>
+* {
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+.container {
+  margin: 30px 22px;
+  display: flex;
+  height: calc(100vh - 64px);
+  width: calc(100vw - 64px);
+  border: 2px solid #86C8D6;
+  border-radius: 16px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.left-column, .right-column {
+  padding: 20px;
+}
+
+.left-column {
+  width: 400px;
+  background-color: #E7F8FF;
+  border-right: 2px solid #9FD6DC;
+  display: flex;
+  flex-direction: column;
+}
+
+.right-column {
+}
+
+h1 {
+  color: #333333;
+}
+
+p {
+  margin: 0;
+  line-height: 1.8;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+  flex-grow: 1;
+  overflow-y: auto;
+}
+
+li {
+  padding: 14px;
+  margin-bottom: 12px;
+  background-color: white;
+  border: 3px solid #5AA1AF;
+  border-radius: 16px;
+  color: #333333;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.file-name {
+  font-weight: bold;
+  margin-bottom: 4px;
+}
+
+.file-date {
+  font-size: 14px;
+  color: #666666;
+}
+
+.delete-icon {
+  cursor: pointer;
+  color: #FF4D4F;
+}
+
+.button-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+  gap: 40px;
+}
+
+.upload-button {
+  padding: 10px 20px;
+  background-color: white;
+  border: 2px solid #5AA1AF;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.plus-delete-icon {
+  margin-right: 8px;
+}
+
+.upload-button:hover {
+  background-color: #F6F6F6;
+}
+
+.text-container {
+  flex-grow: 1;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+</style>
