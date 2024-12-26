@@ -15,8 +15,11 @@ Meeting Minutes Assistant: An AI-powered tool for quickly converting meeting rec
 
 ## 项目组成
 
-* `/src`
-源代码
+* `/backend`
+后端应用程序
+
+* `/frontend`
+前端应用程序
 
 * `Documentation.md`
 项目说明文档
