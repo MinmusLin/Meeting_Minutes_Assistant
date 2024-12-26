@@ -17,13 +17,18 @@
             <div class='file-name'>{{ file.name }}</div>
             <div class='file-date'>{{ file.date }}</div>
           </div>
-          <el-icon size='20'>
-            <Delete class='delete-icon'/>
-          </el-icon>
+          <div>
+            <el-icon size='20' @click='downloadFile' style='margin-right: 8px'>
+              <Download class='download-icon'/>
+            </el-icon>
+            <el-icon size='20' @click='deleteFile(index)'>
+              <Delete class='delete-icon'/>
+            </el-icon>
+          </div>
         </li>
       </ul>
       <div class='button-container'>
-        <label class='upload-button'>
+        <label class='upload-button' @click='clearAllFiles'>
           <el-icon class='plus-delete-icon'>
             <Delete/>
           </el-icon>
@@ -39,13 +44,15 @@
       </div>
     </div>
     <div class='right-column'>
+      <div v-html='renderedMarkdown' class='markdown-content'/>
     </div>
   </div>
 </template>
 
 <script setup lang='ts'>
-import {ref} from 'vue'
-import {DataAnalysis, Delete, Plus} from '@element-plus/icons-vue'
+import {ref, onMounted} from 'vue'
+import {DataAnalysis, Delete, Download, Plus} from '@element-plus/icons-vue'
+import {marked} from 'marked'
 
 interface FileItem {
   name: string
@@ -53,6 +60,7 @@ interface FileItem {
 }
 
 const files = ref<FileItem[]>([])
+const renderedMarkdown = ref('')
 
 function handleFileUpload(event: Event) {
   const target = event.target as HTMLInputElement
@@ -62,6 +70,50 @@ function handleFileUpload(event: Event) {
     files.value.push({name: file.name, date: currentDate})
   }
 }
+
+function clearAllFiles() {
+  files.value = []
+}
+
+function deleteFile(index: number) {
+  files.value.splice(index, 1)
+}
+
+async function fetchAndRenderMarkdown() {
+  try {
+    const response = await fetch('/meeting-minutes.md')
+    const markdown = await response.text()
+    // noinspection TypeScriptValidateTypes
+    renderedMarkdown.value = marked(markdown)
+  } catch (error) {
+    renderedMarkdown.value = '<p>无法加载会议纪要内容。</p>'
+  }
+}
+
+async function downloadFile() {
+  try {
+    const response = await fetch('/meeting-minutes.pdf', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'text/markdown',
+      },
+    })
+    const blob = await response.blob()
+    const url = URL.createObjectURL(blob)
+    const a = document.createElement('a')
+    a.href = url
+    a.download = 'meeting-minutes.md'
+    document.body.appendChild(a)
+    a.click()
+    document.body.removeChild(a)
+    URL.revokeObjectURL(url)
+  } catch (error) {
+  }
+}
+
+onMounted(() => {
+  fetchAndRenderMarkdown()
+})
 </script>
 
 <style scoped lang='css'>
@@ -81,11 +133,9 @@ function handleFileUpload(event: Event) {
   overflow: hidden;
 }
 
-.left-column, .right-column {
-  padding: 20px;
-}
-
 .left-column {
+  flex: 0 0 400px;
+  padding: 20px;
   width: 400px;
   background-color: #E7F8FF;
   border-right: 2px solid #9FD6DC;
@@ -94,6 +144,10 @@ function handleFileUpload(event: Event) {
 }
 
 .right-column {
+  flex-grow: 1;
+  padding: 20px;
+  overflow-y: auto;
+  background-color: #FFFFFF;
 }
 
 h1 {
@@ -138,6 +192,11 @@ li {
 .delete-icon {
   cursor: pointer;
   color: #FF4D4F;
+}
+
+.download-icon {
+  cursor: pointer;
+  color: #409EFF;
 }
 
 .button-container {
