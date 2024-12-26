@@ -298,5 +298,6 @@ li {
 ::-webkit-scrollbar-thumb {
   background-color: #E3F1F8;
   border-radius: 5px;
+  cursor: pointer;
 }
 </style>
