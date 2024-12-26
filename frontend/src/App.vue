@@ -102,7 +102,7 @@ async function downloadFile() {
     const url = URL.createObjectURL(blob)
     const a = document.createElement('a')
     a.href = url
-    a.download = 'meeting-minutes.md'
+    a.download = 'meeting-minutes.pdf'
     document.body.appendChild(a)
     a.click()
     document.body.removeChild(a)
