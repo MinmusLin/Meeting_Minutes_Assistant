@@ -46,7 +46,7 @@
     <div class='right-column'>
       <div v-if='isLoading' class='spinner-container'>
         <div class='spinner'/>
-        <p>正在生成会议纪要...</p>
+        <p class='initial-prompt'>正在生成会议纪要...</p>
       </div>
       <div v-else-if='files.length > 0' v-html='renderedMarkdown' class='markdown-content'/>
       <div v-else class='initial-prompt'>
@@ -57,7 +57,7 @@
 </template>
 
 <script setup lang='ts'>
-import {ref, onMounted} from 'vue'
+import {ref} from 'vue'
 import {DataAnalysis, Delete, Download, Plus} from '@element-plus/icons-vue'
 import {marked} from 'marked'
 
@@ -255,5 +255,12 @@ li {
   display: flex;
   justify-content: space-between;
   margin-bottom: 10px;
+}
+
+.initial-prompt {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 </style>
