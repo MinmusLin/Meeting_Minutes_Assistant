@@ -38,7 +38,8 @@
         </label>
       </div>
     </div>
-    <div class='right-column'></div>
+    <div class='right-column'>
+    </div>
   </div>
 </template>
 
