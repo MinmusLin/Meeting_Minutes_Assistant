@@ -24,6 +24,21 @@ Meeting Minutes Assistant: An AI-powered tool for quickly converting meeting rec
 * `transcription-example.md`
 会议转录示例
 
+## 环境配置
+
+```bash
+source /etc/network_turbo
+git clone https://github.com/MinmusLin/Meeting_Minutes_Assistant
+cd Meeting_Minutes_Assistant/src
+pip install -r requirements.txt
+```
+
+## 运行程序
+
+```bash
+python main.py --audio ../recording-example.wav --output_file ../meeting-minutes.md --language chinese
+```
+
 ## 免责声明
 
 The code and materials contained in this repository are intended for personal learning and research purposes only and may not be used for any commercial purposes. Other users who download or refer to the content of this repository must strictly adhere to the **principles of academic integrity** and must not use these materials for any form of homework submission or other actions that may violate academic honesty. I am not responsible for any direct or indirect consequences arising from the improper use of the contents of this repository. Please ensure that your actions comply with the regulations of your school or institution, as well as applicable laws and regulations, before using this content. If you have any questions, please contact me via [email](mailto:minmuslin@outlook.com).
