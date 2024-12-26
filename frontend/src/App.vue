@@ -44,7 +44,14 @@
       </div>
     </div>
     <div class='right-column'>
-      <div v-html='renderedMarkdown' class='markdown-content'/>
+      <div v-if='isLoading' class='spinner-container'>
+        <div class='spinner'/>
+        <p>正在生成会议纪要...</p>
+      </div>
+      <div v-else-if='files.length > 0' v-html='renderedMarkdown' class='markdown-content'/>
+      <div v-else class='initial-prompt'>
+        <p>请上传会议录音以生成会议纪要</p>
+      </div>
     </div>
   </div>
 </template>
@@ -61,6 +68,8 @@ interface FileItem {
 
 const files = ref<FileItem[]>([])
 const renderedMarkdown = ref('')
+const isLoading = ref(false)
+let loadingTimeout: ReturnType<typeof setTimeout> | null = null
 
 function handleFileUpload(event: Event) {
   const target = event.target as HTMLInputElement
@@ -68,7 +77,23 @@ function handleFileUpload(event: Event) {
   if (file) {
     const currentDate = new Date().toLocaleString()
     files.value.push({name: file.name, date: currentDate})
+    triggerLoading()
   }
+}
+
+function triggerLoading() {
+  if (isLoading.value) {
+    if (loadingTimeout) {
+      clearTimeout(loadingTimeout)
+    }
+  } else {
+    isLoading.value = true
+  }
+  loadingTimeout = setTimeout(() => {
+    fetchAndRenderMarkdown()
+    isLoading.value = false
+    loadingTimeout = null
+  }, 5000)
 }
 
 function clearAllFiles() {
@@ -86,7 +111,7 @@ async function fetchAndRenderMarkdown() {
     // noinspection TypeScriptValidateTypes
     renderedMarkdown.value = marked(markdown)
   } catch (error) {
-    renderedMarkdown.value = '<p>无法加载会议纪要内容。</p>'
+    renderedMarkdown.value = '<p>无法生成会议纪要</p>'
   }
 }
 
@@ -110,10 +135,6 @@ async function downloadFile() {
   } catch (error) {
   }
 }
-
-onMounted(() => {
-  fetchAndRenderMarkdown()
-})
 </script>
 
 <style scoped lang='css'>
