@@ -13,8 +13,6 @@ Meeting Minutes Assistant: An AI-powered tool for quickly converting meeting rec
 > ***Relevant course***
 > * Speech Recognition 2024 (2024年同济大学语音识别)
 
-![](assets/Demonstration.gif)
-
 ## 项目组成
 
 * `/assets`
@@ -37,6 +35,10 @@ Meeting Minutes Assistant: An AI-powered tool for quickly converting meeting rec
 
 * `transcription-example.md`
 会议转录示例
+
+## 项目展示
+
+![](assets/Demonstration.gif)
 
 ## 环境配置
 
