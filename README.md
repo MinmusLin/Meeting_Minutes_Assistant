@@ -30,6 +30,9 @@ Meeting Minutes Assistant: An AI-powered tool for quickly converting meeting rec
 * `meeting-minutes.md`
 会议纪要
 
+* `Presentation.pptx`
+汇报 PPT
+
 * `recording-example.wav`
 会议录音示例
 
