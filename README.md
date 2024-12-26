@@ -35,17 +35,44 @@ Meeting Minutes Assistant: An AI-powered tool for quickly converting meeting rec
 
 ## 环境配置
 
+克隆 GitHub 仓库：
+
 ```bash
-source /etc/network_turbo
 git clone https://github.com/MinmusLin/Meeting_Minutes_Assistant
-cd Meeting_Minutes_Assistant/src
+```
+
+进入项目根目录：
+
+```bash
+cd Meeting_Minutes_Assistant
+```
+
+配置后端环境：
+
+```bash
+cd backend
 pip install -r requirements.txt
+```
+
+配置前端环境：
+
+```bash
+cd frontend
+cnpm install
 ```
 
 ## 运行程序
 
+运行后端应用程序：
+
 ```bash
-python main.py --audio ../recording-example.wav --output_file ../meeting-minutes.md --language chinese
+python main.py [--options]
+```
+
+运行前端应用程序：
+
+```bash
+npm run dev
 ```
 
 ## 免责声明
@@ -56,4 +83,4 @@ The code and materials contained in this repository are intended for personal le
 
 ## 文档更新日期
 
-2024年12月26日
+2024年12月27日
