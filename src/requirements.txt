@@ -1,0 +1,6 @@
+transformers
+datasets
+openai
+accelerate
+librosa
+soundfile

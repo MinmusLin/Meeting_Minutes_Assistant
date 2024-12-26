@@ -15,6 +15,9 @@ Meeting Minutes Assistant: An AI-powered tool for quickly converting meeting rec
 
 ## 项目组成
 
+* `/src`
+源代码
+
 * `recording-example.wav`
 会议录音示例
 
