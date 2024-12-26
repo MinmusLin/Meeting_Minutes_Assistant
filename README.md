@@ -18,6 +18,9 @@ Meeting Minutes Assistant: An AI-powered tool for quickly converting meeting rec
 * `/src`
 源代码
 
+* `Documentation.md`
+项目说明文档
+
 * `meeting-minutes.md`
 会议纪要
 
